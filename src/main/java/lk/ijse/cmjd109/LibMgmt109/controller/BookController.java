@@ -16,9 +16,10 @@ public class BookController {
     public String healthTest(){
         return "Book controller is running";
     }
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public BookDTO addBook(@RequestBody BookDTO bookDTO){
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> addBook(@RequestBody BookDTO bookDTO){
         System.out.println(bookDTO);
-        return bookDTO;
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
+
 }
