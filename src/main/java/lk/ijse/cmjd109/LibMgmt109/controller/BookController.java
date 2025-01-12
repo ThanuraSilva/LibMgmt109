@@ -26,5 +26,11 @@ public class BookController {
         System.out.println(bookId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+    @PatchMapping
+    public ResponseEntity<Void> updateBook(@RequestParam ("bookId") String id, @RequestBody BookDTO bookDTO){
+        System.out.println(id);
+        System.out.println(bookDTO);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 
 }
