@@ -21,5 +21,10 @@ public class BookController {
         System.out.println(bookDTO);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
+    @DeleteMapping("{bookId}")
+    public ResponseEntity<Void> deleteBook(@PathVariable String bookId){
+        System.out.println(bookId);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 
 }
