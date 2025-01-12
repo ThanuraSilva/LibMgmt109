@@ -1,9 +1,13 @@
 package lk.ijse.cmjd109.LibMgmt109.controller;
 
+import lk.ijse.cmjd109.LibMgmt109.dto.BookDTO;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.awt.print.Book;
 
 @RestController
 @RequestMapping("/api/v1/books")
@@ -11,5 +15,10 @@ public class BookController {
     @GetMapping
     public String healthTest(){
         return "Book controller is running";
+    }
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public BookDTO addBook(@RequestBody BookDTO bookDTO){
+        System.out.println(bookDTO);
+        return bookDTO;
     }
 }
