@@ -1,10 +1,11 @@
-package lk.ijse.cmjd109.LibMgmt109.service;
+package lk.ijse.cmjd109.LibMgmt109.service.impl;
 
 import lk.ijse.cmjd109.LibMgmt109.dto.BookDTO;
+import lk.ijse.cmjd109.LibMgmt109.service.BookService;
 
 import java.util.List;
 
-public class BookServiceIMPL implements BookService{
+public class BookServiceIMPL implements BookService {
     @Override
     public void saveBook(BookDTO book) {
 
