@@ -4,10 +4,7 @@ import lk.ijse.cmjd109.LibMgmt109.dto.BookDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.awt.print.Book;
 
 @RestController
 @RequestMapping("/api/v1/books")
@@ -31,6 +28,23 @@ public class BookController {
         System.out.println(id);
         System.out.println(bookDTO);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+    @GetMapping(value = "{bookId}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public BookDTO getSelectedBook(@PathVariable String bookId){
+        System.out.println(bookId + " is selected");
+        BookDTO book = new BookDTO();
+
+        book.setBookId("B12345");
+        book.setTitle("Effective Java");
+        book.setPublisher("Addison-Wesley");
+        book.setIsbn("978-0134685991");
+        book.setAuthor("Joshua Bloch");
+        book.setEdition("3rd");
+        book.setPrice(45.99);
+        book.setTotalQty(100);
+        book.setAvilableQty(80);
+        book.setAddedDate("2025-01-12");
+        return book;
     }
 
 }
