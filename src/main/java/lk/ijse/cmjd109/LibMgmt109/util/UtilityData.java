@@ -1,5 +1,9 @@
 package lk.ijse.cmjd109.LibMgmt109.util;
 
+import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.UUID;
 
 public class UtilityData {
@@ -15,6 +19,16 @@ public class UtilityData {
     public static String generateStaffId(){
         return "S/"+UUID.randomUUID();
     }
+    public static LocalDate generateTodayDate(){
+        return LocalDate.now();
+    }
+    public static Time generateCreatedTime(){
+        return Time.valueOf(LocalDateTime.now().toLocalTime());
+    }
+    public static LocalDate generateReturnDate(){
+        return LocalDate.now().plusDays(7);
+    }
+
 
 
 }
