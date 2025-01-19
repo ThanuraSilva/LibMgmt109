@@ -38,5 +38,4 @@ public class LendingController {
      return ResponseEntity.ok().body(lendingService.getAllLendings());
  }
 
-
 }
