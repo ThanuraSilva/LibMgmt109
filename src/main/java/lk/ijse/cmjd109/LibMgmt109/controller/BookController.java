@@ -3,6 +3,7 @@ package lk.ijse.cmjd109.LibMgmt109.controller;
 import lk.ijse.cmjd109.LibMgmt109.dto.BookDTO;
 import lk.ijse.cmjd109.LibMgmt109.service.BookService;
 import lk.ijse.cmjd109.LibMgmt109.service.impl.BookServiceIMPL;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,9 +16,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/books")
 public class BookController {
-    @Autowired
-    private BookService bookService;
+    private final BookService bookService;
 
+    @Autowired
+    public BookController(BookService bookService) {
+        this.bookService = bookService;
+    }
 
     @GetMapping
     public String healthTest(){
