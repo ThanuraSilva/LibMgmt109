@@ -2,6 +2,7 @@ package lk.ijse.cmjd109.LibMgmt109.service.impl;
 
 import lk.ijse.cmjd109.LibMgmt109.dto.LendingDTO;
 import lk.ijse.cmjd109.LibMgmt109.service.LendingService;
+import lk.ijse.cmjd109.LibMgmt109.util.UtilityData;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.List;
 public class LendingServiceIMPL implements LendingService {
     @Override
     public void addLending(LendingDTO lendingDTO) {
-
+       lendingDTO.setLendingId(UtilityData.generateLendingId());
     }
 
     @Override
