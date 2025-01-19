@@ -30,12 +30,12 @@ public class LendingController {
  @GetMapping ("/{lendingId}")
  public ResponseEntity<LendingDTO> getSpecificLending(@PathVariable String lendingId){
      lendingService.getSpecificLending(lendingId);
-     return null;
+     return ResponseEntity.ok().body(lendingService.getSpecificLending(lendingId));
  }
  @GetMapping
  public ResponseEntity<List<LendingDTO>> getAllLending(){
      lendingService.getAllLendings();
-     return null;
+     return ResponseEntity.ok().body(lendingService.getAllLendings());
  }
 
 
