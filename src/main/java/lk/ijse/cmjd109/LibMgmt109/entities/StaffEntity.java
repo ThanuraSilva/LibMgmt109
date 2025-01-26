@@ -1,5 +1,6 @@
 package lk.ijse.cmjd109.LibMgmt109.entities;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -17,8 +18,8 @@ import java.time.LocalDate;
 public class StaffEntity {
     @Id
     private String staffId;
-    private String fName;
-    private String lName;
+    private String firstName;
+    private String lastName;
     private String email;
     private LocalDate joinDate;
     private LocalDate lastUpdated;

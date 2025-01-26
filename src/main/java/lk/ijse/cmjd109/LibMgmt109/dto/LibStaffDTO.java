@@ -12,8 +12,8 @@ import java.time.LocalDate;
 @Data
 public class LibStaffDTO implements Serializable {
     private String staffId;
-    private String fName;
-    private String lName;
+    private String firstName;
+    private String lastName;
     private String email;
     private LocalDate joinDate;
     private LocalDate lastUpdated;
