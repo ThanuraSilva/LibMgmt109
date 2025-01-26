@@ -1,18 +1,19 @@
 package lk.ijse.cmjd109.LibMgmt109.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Time;
 import java.time.LocalDate;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Entity
+@Table(name = "book")
 public class BookEntity {
     @Id
     private String bookId;
@@ -26,4 +27,6 @@ public class BookEntity {
     private Integer avilableQty;
     private LocalDate lastUpdatedDate;
     private Time lastUpdatedTime;
+    @OneToMany(mappedBy = "book",cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<LendingEntity> lendings;
 }

@@ -1,7 +1,6 @@
 package lk.ijse.cmjd109.LibMgmt109.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,11 +10,16 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Data
 @Entity
+@Table(name = "lending")
 public class LendingEntity {
     @Id
     private String lendingId;
-    private String book;
-    private String member;
+    @ManyToOne
+    @JoinColumn(name = "bookId",nullable = false)
+    private BookEntity book;
+    @ManyToOne
+    @JoinColumn(name = "memberId",nullable = false)
+    private MemberEntity member;
     private LocalDate lendingDate;
     private LocalDate returnDate;
     private Boolean isActive;
