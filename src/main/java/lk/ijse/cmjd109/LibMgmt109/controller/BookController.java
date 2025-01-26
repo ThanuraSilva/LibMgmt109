@@ -41,8 +41,17 @@ public class BookController {
     }
     @PatchMapping
     public ResponseEntity<Void> updateBook(@RequestParam ("bookId") String id, @RequestBody BookDTO bookDTO){
-        bookService.updateBook(id, bookDTO);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+       try {
+           bookService.updateBook(id, bookDTO);
+           return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+       }catch (BookNotFoundException e){
+           e.printStackTrace();
+           return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+       }catch (Exception e){
+           e.printStackTrace();
+           return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+       }
+
     }
     @GetMapping(value = "{bookId}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<BookDTO> getSelectedBook(@PathVariable String bookId){

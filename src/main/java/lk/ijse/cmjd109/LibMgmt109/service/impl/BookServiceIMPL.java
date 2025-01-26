@@ -10,12 +10,14 @@ import lk.ijse.cmjd109.LibMgmt109.util.UtilityData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class BookServiceIMPL implements BookService {
     private final BookDao bookDao;
@@ -31,7 +33,20 @@ public class BookServiceIMPL implements BookService {
 
     @Override
     public void updateBook(String bookId, BookDTO book) {
-
+        Optional<BookEntity> foundBook = bookDao.findById(bookId);
+        if(!foundBook.isPresent()){
+            throw new BookNotFoundException("Book not found");
+        }
+        foundBook.get().setTitle(book.getTitle());
+        foundBook.get().setPublisher(book.getPublisher());
+        foundBook.get().setIsbn(book.getIsbn());
+        foundBook.get().setAuthor(book.getAuthor());
+        foundBook.get().setEdition(book.getEdition());
+        foundBook.get().setPrice(book.getPrice());
+        foundBook.get().setAvilableQty(book.getAvilableQty());
+        foundBook.get().setTotalQty(book.getTotalQty());
+        foundBook.get().setLastUpdatedDate(UtilityData.generateTodayDate());
+        foundBook.get().setLastUpdatedTime(UtilityData.generateCreatedTime());
     }
 
     @Override
