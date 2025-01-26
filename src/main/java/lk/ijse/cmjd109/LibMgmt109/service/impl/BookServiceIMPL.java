@@ -3,6 +3,7 @@ package lk.ijse.cmjd109.LibMgmt109.service.impl;
 import lk.ijse.cmjd109.LibMgmt109.dao.BookDao;
 import lk.ijse.cmjd109.LibMgmt109.dto.BookDTO;
 import lk.ijse.cmjd109.LibMgmt109.entities.BookEntity;
+import lk.ijse.cmjd109.LibMgmt109.exception.BookNotFoundException;
 import lk.ijse.cmjd109.LibMgmt109.service.BookService;
 import lk.ijse.cmjd109.LibMgmt109.util.EntityDTOConversion;
 import lk.ijse.cmjd109.LibMgmt109.util.UtilityData;
@@ -37,7 +38,7 @@ public class BookServiceIMPL implements BookService {
     public void deleteBook(String bookId) {
         Optional<BookEntity> foundBook = bookDao.findById(bookId);
         if(!foundBook.isPresent()){
-            throw  new RuntimeException("Book not found");
+            throw new BookNotFoundException("Book not found");
         }
         bookDao.deleteById(bookId);
     }
