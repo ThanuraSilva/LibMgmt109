@@ -63,8 +63,6 @@ public class BookController {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-
-
     }
     @GetMapping(value = "getall",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<BookDTO>> getAllBooks(){
