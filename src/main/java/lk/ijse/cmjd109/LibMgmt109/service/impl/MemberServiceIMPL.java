@@ -27,17 +27,12 @@ public class MemberServiceIMPL implements MemberService {
 
     @Override
     public MemberDTO getSelectedMember(String memberId) {
-       return new MemberDTO("12345", "John Doe", "johndoe@example.com", "2023-01-01");
+      return null;
     }
 
     @Override
     public List<MemberDTO> getAllMembers() {
-        List<MemberDTO> members = new ArrayList<>();
-        members.add(new MemberDTO("12345", "John Doe", "johndoe@example.com", "2023-01-01"));
-        members.add(new MemberDTO("12346", "Jane Smith", "janesmith@example.com", "2023-02-01"));
-        members.add(new MemberDTO("12347", "Alice Johnson", "alicejohnson@example.com", "2023-03-01"));
-        members.add(new MemberDTO("12348", "Bob Brown", "bobbrown@example.com", "2023-04-01"));
-        members.add(new MemberDTO("12349", "Charlie Davis", "charliedavis@example.com", "2023-05-01"));
-        return members;
+
+        return null;
     }
 }
