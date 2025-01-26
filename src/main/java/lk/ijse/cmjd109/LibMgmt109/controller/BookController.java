@@ -51,11 +51,20 @@ public class BookController {
            e.printStackTrace();
            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
        }
-
     }
     @GetMapping(value = "{bookId}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<BookDTO> getSelectedBook(@PathVariable String bookId){
-        return ResponseEntity.ok(bookService.getSelectedBook(bookId));
+        try {
+            return ResponseEntity.ok(bookService.getSelectedBook(bookId));
+        }catch (BookNotFoundException e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+
+
     }
     @GetMapping(value = "getall",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<BookDTO>> getAllBooks(){
