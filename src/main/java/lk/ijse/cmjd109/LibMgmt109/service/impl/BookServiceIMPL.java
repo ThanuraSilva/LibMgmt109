@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class BookServiceIMPL implements BookService {
@@ -33,7 +35,11 @@ public class BookServiceIMPL implements BookService {
 
     @Override
     public void deleteBook(String bookId) {
-
+        Optional<BookEntity> foundBook = bookDao.findById(bookId);
+        if(!foundBook.isPresent()){
+            throw  new RuntimeException("Book not found");
+        }
+        bookDao.deleteById(bookId);
     }
 
     @Override
