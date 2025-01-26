@@ -1,19 +1,26 @@
 package lk.ijse.cmjd109.LibMgmt109.service.impl;
 
+import lk.ijse.cmjd109.LibMgmt109.dao.BookDao;
 import lk.ijse.cmjd109.LibMgmt109.dto.BookDTO;
 import lk.ijse.cmjd109.LibMgmt109.service.BookService;
 import lk.ijse.cmjd109.LibMgmt109.util.UtilityData;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 @Service
+@RequiredArgsConstructor
 public class BookServiceIMPL implements BookService {
+    private final BookDao bookDao;
     @Override
     public void saveBook(BookDTO book) {
         book.setBookId(UtilityData.generateBookId());
-        System.out.println("From service layer"+book);
+        book.setLastUpdatedDate(UtilityData.generateTodayDate());
+        book.setLastUpdatedTime(UtilityData.generateCreatedTime());
+        bookDao.save()
+
     }
 
     @Override
