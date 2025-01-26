@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -12,10 +14,10 @@ public class LendingDTO implements Serializable {
     private String lendingId;
     private String book;
     private String member;
-    private String lendingDate;
-    private String returnDate;
+    private LocalDate lendingDate;
+    private LocalDate returnDate;
     private Boolean isActive;
-    private String overDue;
-    private String fineAmount;
+    private Long overDue;
+    private Double fineAmount;
 
 }

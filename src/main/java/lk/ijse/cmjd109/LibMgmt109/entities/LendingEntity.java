@@ -23,6 +23,6 @@ public class LendingEntity {
     private LocalDate lendingDate;
     private LocalDate returnDate;
     private Boolean isActive;
-    private Integer overDue;
+    private Long overDue;
     private Double fineAmount;
 }
