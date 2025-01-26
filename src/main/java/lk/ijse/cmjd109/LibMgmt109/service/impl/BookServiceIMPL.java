@@ -22,8 +22,8 @@ public class BookServiceIMPL implements BookService {
         book.setBookId(UtilityData.generateBookId());
         book.setLastUpdatedDate(UtilityData.generateTodayDate());
         book.setLastUpdatedTime(UtilityData.generateCreatedTime());
-        BookEntity bookEntity = entityDTOConversion.toBookEntity(book);
-        bookDao.save(bookEntity);
+//        BookEntity bookEntity = entityDTOConversion.toBookEntity(book);
+        bookDao.save(entityDTOConversion.toBookEntity(book));
     }
 
     @Override
