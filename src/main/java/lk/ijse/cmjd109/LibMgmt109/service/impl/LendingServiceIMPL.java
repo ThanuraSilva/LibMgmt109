@@ -1,9 +1,13 @@
 package lk.ijse.cmjd109.LibMgmt109.service.impl;
 
 import lk.ijse.cmjd109.LibMgmt109.dao.BookDao;
+import lk.ijse.cmjd109.LibMgmt109.dao.LendingDao;
 import lk.ijse.cmjd109.LibMgmt109.dao.MemberDao;
 import lk.ijse.cmjd109.LibMgmt109.dto.LendingDTO;
+import lk.ijse.cmjd109.LibMgmt109.entities.BookEntity;
+import lk.ijse.cmjd109.LibMgmt109.entities.MemberEntity;
 import lk.ijse.cmjd109.LibMgmt109.exception.BookNotFoundException;
+import lk.ijse.cmjd109.LibMgmt109.exception.EnoughBooksNotFoundException;
 import lk.ijse.cmjd109.LibMgmt109.exception.MemberNotFoundException;
 import lk.ijse.cmjd109.LibMgmt109.service.LendingService;
 import lk.ijse.cmjd109.LibMgmt109.util.LendingMapping;
@@ -20,6 +24,7 @@ public class LendingServiceIMPL implements LendingService {
     private final LendingMapping lendingMapping;
     private final BookDao bookDao;
     private final MemberDao memberDao;
+    private final LendingDao lendingDao;
 
 
     @Override
@@ -28,11 +33,25 @@ public class LendingServiceIMPL implements LendingService {
         String book = lendingDTO.getBook();
         String member = lendingDTO.getMember();
         //Availability of the book
-        bookDao.findById(book).orElseThrow(()->
+        var bookEntity = bookDao.findById(book).orElseThrow(() ->
                 new BookNotFoundException("Book not found"));
         // Membership validation
-        memberDao.findById(member).orElseThrow(()->
+        var memberEntity = memberDao.findById(member).orElseThrow(() ->
                 new MemberNotFoundException("Member not found"));
+
+        //chack the avilQty
+        if(bookDao.avlQty(book) > 0){
+            //Books are available
+            lendingDTO.setLendingId(UtilityData.generateLendingId());
+            lendingDTO.setIsActive(true);
+            lendingDTO.setLendingDate(UtilityData.generateTodayDate());
+            lendingDTO.setReturnDate(UtilityData.generateReturnDate());
+            lendingDTO.setOverDue(0L);
+            lendingDTO.setFineAmount(0.00);
+            lendingDao.save(lendingMapping.toLendingEntity(lendingDTO,bookEntity,memberEntity));
+        }else {
+            throw new EnoughBooksNotFoundException("Not enough books to proceed");
+        }
 
     }
 
