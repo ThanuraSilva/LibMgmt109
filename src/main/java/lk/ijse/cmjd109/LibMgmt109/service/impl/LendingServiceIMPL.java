@@ -70,6 +70,7 @@ public class LendingServiceIMPL implements LendingService {
         foundLending.setIsActive(false);
         foundLending.setOverDue(overdue);
         foundLending.setFineAmount(fineAmount);
+        bookDao.addBookAfterHandover(foundLending.getBook().getBookId());
     }
 
 
