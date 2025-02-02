@@ -5,9 +5,11 @@ import lk.ijse.cmjd109.LibMgmt109.dao.LendingDao;
 import lk.ijse.cmjd109.LibMgmt109.dao.MemberDao;
 import lk.ijse.cmjd109.LibMgmt109.dto.LendingDTO;
 import lk.ijse.cmjd109.LibMgmt109.entities.BookEntity;
+import lk.ijse.cmjd109.LibMgmt109.entities.LendingEntity;
 import lk.ijse.cmjd109.LibMgmt109.entities.MemberEntity;
 import lk.ijse.cmjd109.LibMgmt109.exception.BookNotFoundException;
 import lk.ijse.cmjd109.LibMgmt109.exception.EnoughBooksNotFoundException;
+import lk.ijse.cmjd109.LibMgmt109.exception.LendingNotFoundException;
 import lk.ijse.cmjd109.LibMgmt109.exception.MemberNotFoundException;
 import lk.ijse.cmjd109.LibMgmt109.service.LendingService;
 import lk.ijse.cmjd109.LibMgmt109.util.LendingMapping;
@@ -16,6 +18,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 @Service
 @Transactional
@@ -57,8 +62,17 @@ public class LendingServiceIMPL implements LendingService {
 
     @Override
     public void handOverLending(String lendingID) {
-
+        var foundLending =
+                lendingDao.findById(lendingID).orElseThrow(() -> new LendingNotFoundException("Lending record not found"));
+        var returnDate = foundLending.getReturnDate();
+        var overdue = calcOverdue(returnDate); //overdue day count
+        var fineAmount = calcFineAmount(overdue);
+        foundLending.setIsActive(false);
+        foundLending.setOverDue(overdue);
+        foundLending.setFineAmount(fineAmount);
     }
+
+
 
     @Override
     public void deleteLending(String lendingID) {
@@ -73,5 +87,16 @@ public class LendingServiceIMPL implements LendingService {
     @Override
     public List<LendingDTO> getAllLendings() {
         return List.of();
+    }
+    private Long calcOverdue(LocalDate returnDate) {
+        var today = UtilityData.generateTodayDate();
+        if(returnDate.isBefore(today)){
+             return ChronoUnit.DAYS.between(today,returnDate);
+        }
+        return 0L;
+    }
+    private Double calcFineAmount(Long overdue) {
+        double perDayFine = 5.00;
+        return overdue * perDayFine;
     }
 }

@@ -3,6 +3,7 @@ package lk.ijse.cmjd109.LibMgmt109.controller;
 import lk.ijse.cmjd109.LibMgmt109.dto.LendingDTO;
 import lk.ijse.cmjd109.LibMgmt109.exception.BookNotFoundException;
 import lk.ijse.cmjd109.LibMgmt109.exception.EnoughBooksNotFoundException;
+import lk.ijse.cmjd109.LibMgmt109.exception.LendingNotFoundException;
 import lk.ijse.cmjd109.LibMgmt109.exception.MemberNotFoundException;
 import lk.ijse.cmjd109.LibMgmt109.service.LendingService;
 import lombok.RequiredArgsConstructor;
@@ -39,8 +40,16 @@ public class LendingController {
  }
  @PatchMapping("/{lendingId}")
  public ResponseEntity<Void> handoverBook(@PathVariable String lendingId){
-     lendingService.handOverLending(lendingId);
-     return ResponseEntity.noContent().build();
+     if(lendingId == null){
+         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+     }
+     try {
+         lendingService.handOverLending(lendingId);
+         return ResponseEntity.noContent().build();
+     }catch (LendingNotFoundException e){
+         e.printStackTrace();
+         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+     }
  }
  @DeleteMapping("/{lendingId}")
  public ResponseEntity<Void> deleteLending(@PathVariable String lendingId){
