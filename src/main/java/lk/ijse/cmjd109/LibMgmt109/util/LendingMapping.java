@@ -6,7 +6,7 @@ import lk.ijse.cmjd109.LibMgmt109.entities.LendingEntity;
 import lk.ijse.cmjd109.LibMgmt109.entities.MemberEntity;
 import org.springframework.stereotype.Component;
 
-@Component
+
 public class LendingMapping {
     public static LendingDTO toLendingDTO(LendingEntity lendingEntity) {
         var lendingDTO = new LendingDTO();

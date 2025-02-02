@@ -21,7 +21,7 @@ import java.util.List;
 @Transactional
 @RequiredArgsConstructor
 public class LendingServiceIMPL implements LendingService {
-    private final LendingMapping lendingMapping;
+  //  private final LendingMapping lendingMapping;
     private final BookDao bookDao;
     private final MemberDao memberDao;
     private final LendingDao lendingDao;
@@ -48,7 +48,7 @@ public class LendingServiceIMPL implements LendingService {
             lendingDTO.setReturnDate(UtilityData.generateReturnDate());
             lendingDTO.setOverDue(0L);
             lendingDTO.setFineAmount(0.00);
-            lendingDao.save(lendingMapping.toLendingEntity(lendingDTO,bookEntity,memberEntity));
+            lendingDao.save(LendingMapping.toLendingEntity(lendingDTO,bookEntity,memberEntity));
         }else {
             throw new EnoughBooksNotFoundException("Not enough books to proceed");
         }
