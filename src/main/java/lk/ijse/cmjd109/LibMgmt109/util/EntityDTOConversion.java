@@ -3,7 +3,9 @@ package lk.ijse.cmjd109.LibMgmt109.util;
 import lk.ijse.cmjd109.LibMgmt109.dao.StaffDao;
 import lk.ijse.cmjd109.LibMgmt109.dto.BookDTO;
 import lk.ijse.cmjd109.LibMgmt109.dto.LibStaffDTO;
+import lk.ijse.cmjd109.LibMgmt109.dto.MemberDTO;
 import lk.ijse.cmjd109.LibMgmt109.entities.BookEntity;
+import lk.ijse.cmjd109.LibMgmt109.entities.MemberEntity;
 import lk.ijse.cmjd109.LibMgmt109.entities.StaffEntity;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -38,6 +40,17 @@ public class EntityDTOConversion {
     public List<LibStaffDTO> toStaffDTOList(List<StaffEntity> staffEntities){
         return modelMapper.map(staffEntities,new TypeToken<List<LibStaffDTO>>(){}.getType());
     }
+    //Member
+    public MemberDTO toMemberDTO(MemberEntity memberEntity) {
+        return modelMapper.map(memberEntity, MemberDTO.class);
+    }
+    public MemberEntity toMemberEntity(MemberDTO memberDTO) {
+        return modelMapper.map(memberDTO,MemberEntity.class);
+    }
+    public List<MemberDTO> toMemberDTOList(List<MemberEntity> staffEntities){
+        return modelMapper.map(staffEntities,new TypeToken<List<MemberDTO>>(){}.getType());
+    }
+
 
 
 

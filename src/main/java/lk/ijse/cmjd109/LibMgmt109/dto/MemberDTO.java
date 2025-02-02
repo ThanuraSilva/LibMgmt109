@@ -12,7 +12,8 @@ import java.time.LocalDate;
 @Data
 public class MemberDTO implements Serializable {
     private String memberId;
-    private String name;
+    private String fName;
+    private String lName;
     private String email;
     private LocalDate memberShipDate;
 }

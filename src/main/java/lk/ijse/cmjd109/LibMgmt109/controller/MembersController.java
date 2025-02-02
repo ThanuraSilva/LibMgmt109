@@ -1,6 +1,7 @@
 package lk.ijse.cmjd109.LibMgmt109.controller;
 
 import lk.ijse.cmjd109.LibMgmt109.dto.MemberDTO;
+import lk.ijse.cmjd109.LibMgmt109.exception.MemberNotFoundException;
 import lk.ijse.cmjd109.LibMgmt109.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -24,17 +25,39 @@ public class MembersController {
     }
     @PatchMapping("/{memberId}")
     public ResponseEntity<Void> updateMember(@PathVariable String memberId, @RequestBody MemberDTO memberDTO){
-        memberService.updateMember(memberId, memberDTO);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        try {
+            memberService.updateMember(memberId, memberDTO);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }catch (MemberNotFoundException e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
     @DeleteMapping("/{memberId}")
     public ResponseEntity<Void> deleteMember(@PathVariable String memberId){
-        memberService.deleteMember(memberId);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        try {
+            memberService.deleteMember(memberId);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }catch (MemberNotFoundException e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+
     }
     @GetMapping(value = "/{memberId}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<MemberDTO> getSelectedMember(@PathVariable String memberId){
-        return new ResponseEntity<>(memberService.getSelectedMember(memberId), HttpStatus.OK);
+        try {
+            return new ResponseEntity<>(memberService.getSelectedMember(memberId), HttpStatus.OK);
+        }catch (MemberNotFoundException e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<MemberDTO>> getAllMembers(){
