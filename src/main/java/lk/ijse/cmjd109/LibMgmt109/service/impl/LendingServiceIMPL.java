@@ -49,6 +49,7 @@ public class LendingServiceIMPL implements LendingService {
             lendingDTO.setOverDue(0L);
             lendingDTO.setFineAmount(0.00);
             lendingDao.save(LendingMapping.toLendingEntity(lendingDTO,bookEntity,memberEntity));
+            bookDao.deductBookQtyBasedOnLending(book);
         }else {
             throw new EnoughBooksNotFoundException("Not enough books to proceed");
         }
