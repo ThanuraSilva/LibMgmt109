@@ -12,6 +12,7 @@ import lk.ijse.cmjd109.LibMgmt109.service.LendingService;
 import lk.ijse.cmjd109.LibMgmt109.util.LendingMapping;
 import lk.ijse.cmjd109.LibMgmt109.util.UtilityData;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +28,8 @@ public class LendingServiceIMPL implements LendingService {
     private final BookDao bookDao;
     private final MemberDao memberDao;
     private final LendingDao lendingDao;
+    @Value("${perDayFine}")
+    private Double perDayFine;
 
 
     @Override
@@ -98,7 +101,6 @@ public class LendingServiceIMPL implements LendingService {
         return 0L;
     }
     private Double calcFineAmount(Long overdue) {
-        double perDayFine = 5.00;
         return overdue * perDayFine;
     }
 }
