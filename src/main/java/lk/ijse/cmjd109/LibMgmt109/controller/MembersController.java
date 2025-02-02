@@ -29,8 +29,10 @@ public class MembersController {
             memberService.updateMember(memberId, memberDTO);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }catch (MemberNotFoundException e){
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }catch (Exception e){
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
@@ -41,8 +43,10 @@ public class MembersController {
             memberService.deleteMember(memberId);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }catch (MemberNotFoundException e){
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }catch (Exception e){
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
@@ -53,8 +57,10 @@ public class MembersController {
         try {
             return new ResponseEntity<>(memberService.getSelectedMember(memberId), HttpStatus.OK);
         }catch (MemberNotFoundException e){
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }catch (Exception e){
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
