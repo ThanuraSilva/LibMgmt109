@@ -7,10 +7,7 @@ import lk.ijse.cmjd109.LibMgmt109.dto.LendingDTO;
 import lk.ijse.cmjd109.LibMgmt109.entities.BookEntity;
 import lk.ijse.cmjd109.LibMgmt109.entities.LendingEntity;
 import lk.ijse.cmjd109.LibMgmt109.entities.MemberEntity;
-import lk.ijse.cmjd109.LibMgmt109.exception.BookNotFoundException;
-import lk.ijse.cmjd109.LibMgmt109.exception.EnoughBooksNotFoundException;
-import lk.ijse.cmjd109.LibMgmt109.exception.LendingNotFoundException;
-import lk.ijse.cmjd109.LibMgmt109.exception.MemberNotFoundException;
+import lk.ijse.cmjd109.LibMgmt109.exception.*;
 import lk.ijse.cmjd109.LibMgmt109.service.LendingService;
 import lk.ijse.cmjd109.LibMgmt109.util.LendingMapping;
 import lk.ijse.cmjd109.LibMgmt109.util.UtilityData;
@@ -64,6 +61,10 @@ public class LendingServiceIMPL implements LendingService {
     public void handOverLending(String lendingID) {
         var foundLending =
                 lendingDao.findById(lendingID).orElseThrow(() -> new LendingNotFoundException("Lending record not found"));
+        if(!foundLending.getIsActive()){
+            throw new LendingAlreadyHandoverException("Lending already handover");
+        }
+
         var returnDate = foundLending.getReturnDate();
         var overdue = calcOverdue(returnDate); //overdue day count
         var fineAmount = calcFineAmount(overdue);

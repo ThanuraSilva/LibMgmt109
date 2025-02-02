@@ -1,10 +1,7 @@
 package lk.ijse.cmjd109.LibMgmt109.controller;
 
 import lk.ijse.cmjd109.LibMgmt109.dto.LendingDTO;
-import lk.ijse.cmjd109.LibMgmt109.exception.BookNotFoundException;
-import lk.ijse.cmjd109.LibMgmt109.exception.EnoughBooksNotFoundException;
-import lk.ijse.cmjd109.LibMgmt109.exception.LendingNotFoundException;
-import lk.ijse.cmjd109.LibMgmt109.exception.MemberNotFoundException;
+import lk.ijse.cmjd109.LibMgmt109.exception.*;
 import lk.ijse.cmjd109.LibMgmt109.service.LendingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -46,7 +43,7 @@ public class LendingController {
      try {
          lendingService.handOverLending(lendingId);
          return ResponseEntity.noContent().build();
-     }catch (LendingNotFoundException e){
+     }catch (LendingNotFoundException | LendingAlreadyHandoverException e){
          e.printStackTrace();
          return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
      }
