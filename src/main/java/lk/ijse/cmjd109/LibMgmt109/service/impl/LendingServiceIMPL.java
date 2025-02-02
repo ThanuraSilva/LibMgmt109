@@ -29,7 +29,6 @@ public class LendingServiceIMPL implements LendingService {
 
     @Override
     public void addLending(LendingDTO lendingDTO) {
-
         String book = lendingDTO.getBook();
         String member = lendingDTO.getMember();
         //Availability of the book

@@ -24,7 +24,7 @@ public class LendingController {
      }
      try {
          lendingService.addLending(lendingDTO);
-         return ResponseEntity.ok().build();
+         return new ResponseEntity<>(HttpStatus.CREATED);
      }catch (BookNotFoundException | MemberNotFoundException e){
          e.printStackTrace();
          return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
