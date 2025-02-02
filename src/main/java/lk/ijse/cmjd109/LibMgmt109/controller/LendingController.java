@@ -1,8 +1,12 @@
 package lk.ijse.cmjd109.LibMgmt109.controller;
 
 import lk.ijse.cmjd109.LibMgmt109.dto.LendingDTO;
+import lk.ijse.cmjd109.LibMgmt109.exception.BookNotFoundException;
+import lk.ijse.cmjd109.LibMgmt109.exception.EnoughBooksNotFoundException;
+import lk.ijse.cmjd109.LibMgmt109.exception.MemberNotFoundException;
 import lk.ijse.cmjd109.LibMgmt109.service.LendingService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,8 +19,23 @@ public class LendingController {
  private final LendingService lendingService;
  @PostMapping
  public ResponseEntity<Void> addLending(@RequestBody LendingDTO lendingDTO){
-     lendingService.addLending(lendingDTO);
-     return ResponseEntity.ok().build();
+     if(lendingDTO == null){
+         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+     }
+     try {
+         lendingService.addLending(lendingDTO);
+         return ResponseEntity.ok().build();
+     }catch (BookNotFoundException | MemberNotFoundException e){
+         e.printStackTrace();
+         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+     }catch (EnoughBooksNotFoundException e){
+         e.printStackTrace();
+         return new ResponseEntity<>(HttpStatus.CONFLICT);
+     }catch (Exception e){
+         e.printStackTrace();
+         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+     }
+
  }
  @PatchMapping("/{lendingId}")
  public ResponseEntity<Void> handoverBook(@PathVariable String lendingId){
