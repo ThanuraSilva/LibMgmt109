@@ -87,7 +87,10 @@ public class LendingServiceIMPL implements LendingService {
 
     @Override
     public LendingDTO getSpecificLending(String lendingID) {
-        return null;
+        var lendingEntity =
+                lendingDao.findById(lendingID).orElseThrow(() -> new LendingNotFoundException("Lending record not found"));
+        return LendingMapping.toLendingDTO(lendingEntity);
+
     }
 
     @Override

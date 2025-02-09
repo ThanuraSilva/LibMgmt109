@@ -64,8 +64,17 @@ public class LendingController {
  }
  @GetMapping ("/{lendingId}")
  public ResponseEntity<LendingDTO> getSpecificLending(@PathVariable String lendingId){
-     lendingService.getSpecificLending(lendingId);
-     return ResponseEntity.ok().body(lendingService.getSpecificLending(lendingId));
+    try {
+        lendingService.getSpecificLending(lendingId);
+        return ResponseEntity.ok().body(lendingService.getSpecificLending(lendingId));
+    }catch (LendingNotFoundException e){
+        e.printStackTrace();
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }catch (Exception e){
+        e.printStackTrace();
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
  }
  @GetMapping
  public ResponseEntity<List<LendingDTO>> getAllLending(){
