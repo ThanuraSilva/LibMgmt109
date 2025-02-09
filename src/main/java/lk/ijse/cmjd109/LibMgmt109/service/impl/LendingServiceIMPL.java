@@ -9,6 +9,7 @@ import lk.ijse.cmjd109.LibMgmt109.entities.LendingEntity;
 import lk.ijse.cmjd109.LibMgmt109.entities.MemberEntity;
 import lk.ijse.cmjd109.LibMgmt109.exception.*;
 import lk.ijse.cmjd109.LibMgmt109.service.LendingService;
+import lk.ijse.cmjd109.LibMgmt109.util.EntityDTOConversion;
 import lk.ijse.cmjd109.LibMgmt109.util.LendingMapping;
 import lk.ijse.cmjd109.LibMgmt109.util.UtilityData;
 import lombok.RequiredArgsConstructor;
@@ -24,12 +25,13 @@ import java.util.List;
 @Transactional
 @RequiredArgsConstructor
 public class LendingServiceIMPL implements LendingService {
-  //  private final LendingMapping lendingMapping;
+
     private final BookDao bookDao;
     private final MemberDao memberDao;
     private final LendingDao lendingDao;
     @Value("${perDayFine}")
     private Double perDayFine;
+    private final EntityDTOConversion entityDTOConversion;
 
 
     @Override
@@ -43,7 +45,7 @@ public class LendingServiceIMPL implements LendingService {
         var memberEntity = memberDao.findById(member).orElseThrow(() ->
                 new MemberNotFoundException("Member not found"));
 
-        //chack the avilQty
+        //chack the avlQty
         if(bookDao.avlQty(book) > 0){
             //Books are available
             lendingDTO.setLendingId(UtilityData.generateLendingId());
@@ -57,9 +59,7 @@ public class LendingServiceIMPL implements LendingService {
         }else {
             throw new EnoughBooksNotFoundException("Not enough books to proceed");
         }
-
     }
-
     @Override
     public void handOverLending(String lendingID) {
         var foundLending =
@@ -76,9 +76,6 @@ public class LendingServiceIMPL implements LendingService {
         foundLending.setFineAmount(fineAmount);
         bookDao.addBookAfterHandover(foundLending.getBook().getBookId());
     }
-
-
-
     @Override
     public void deleteLending(String lendingID) {
         lendingDao.findById(lendingID).orElseThrow(() -> new LendingNotFoundException("Lending record not found"));
@@ -95,7 +92,9 @@ public class LendingServiceIMPL implements LendingService {
 
     @Override
     public List<LendingDTO> getAllLendings() {
-        return List.of();
+        List<LendingEntity> allLendings
+                = lendingDao.findAll();
+        return entityDTOConversion.getAllDTOLendings(allLendings);
     }
     private Long calcOverdue(LocalDate returnDate) {
         var today = UtilityData.generateTodayDate();

@@ -32,4 +32,5 @@ public class LendingMapping {
         lendingEntity.setIsActive(lendingDTO.getIsActive());
         return lendingEntity;
     }
+
 }

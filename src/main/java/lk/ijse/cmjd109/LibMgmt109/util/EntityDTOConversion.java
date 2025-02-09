@@ -2,9 +2,11 @@ package lk.ijse.cmjd109.LibMgmt109.util;
 
 import lk.ijse.cmjd109.LibMgmt109.dao.StaffDao;
 import lk.ijse.cmjd109.LibMgmt109.dto.BookDTO;
+import lk.ijse.cmjd109.LibMgmt109.dto.LendingDTO;
 import lk.ijse.cmjd109.LibMgmt109.dto.LibStaffDTO;
 import lk.ijse.cmjd109.LibMgmt109.dto.MemberDTO;
 import lk.ijse.cmjd109.LibMgmt109.entities.BookEntity;
+import lk.ijse.cmjd109.LibMgmt109.entities.LendingEntity;
 import lk.ijse.cmjd109.LibMgmt109.entities.MemberEntity;
 import lk.ijse.cmjd109.LibMgmt109.entities.StaffEntity;
 import lombok.RequiredArgsConstructor;
@@ -49,6 +51,10 @@ public class EntityDTOConversion {
     }
     public List<MemberDTO> toMemberDTOList(List<MemberEntity> staffEntities){
         return modelMapper.map(staffEntities,new TypeToken<List<MemberDTO>>(){}.getType());
+    }
+    //Get all lendings
+    public List<LendingDTO>getAllDTOLendings(List<LendingEntity> lendingEntities){
+        return modelMapper.map(lendingEntities,new TypeToken<List<LendingDTO>>(){}.getType());
     }
 
 
