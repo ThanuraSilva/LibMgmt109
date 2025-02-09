@@ -50,7 +50,17 @@ public class LendingController {
  }
  @DeleteMapping("/{lendingId}")
  public ResponseEntity<Void> deleteLending(@PathVariable String lendingId){
-     return ResponseEntity.noContent().build();
+     try {
+         lendingService.deleteLending(lendingId);
+         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+     }catch (LendingNotFoundException e) {
+         e.printStackTrace();
+         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+     }catch (Exception e){
+         e.printStackTrace();
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+     }
+
  }
  @GetMapping ("/{lendingId}")
  public ResponseEntity<LendingDTO> getSpecificLending(@PathVariable String lendingId){
