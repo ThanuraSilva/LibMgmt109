@@ -5,10 +5,8 @@ import lk.ijse.cmjd109.LibMgmt109.dto.BookDTO;
 import lk.ijse.cmjd109.LibMgmt109.dto.LendingDTO;
 import lk.ijse.cmjd109.LibMgmt109.dto.LibStaffDTO;
 import lk.ijse.cmjd109.LibMgmt109.dto.MemberDTO;
-import lk.ijse.cmjd109.LibMgmt109.entities.BookEntity;
-import lk.ijse.cmjd109.LibMgmt109.entities.LendingEntity;
-import lk.ijse.cmjd109.LibMgmt109.entities.MemberEntity;
-import lk.ijse.cmjd109.LibMgmt109.entities.StaffEntity;
+import lk.ijse.cmjd109.LibMgmt109.dto.secure.UserDTO;
+import lk.ijse.cmjd109.LibMgmt109.entities.*;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -55,6 +53,13 @@ public class EntityDTOConversion {
     //Get all lendings
     public List<LendingDTO>getAllDTOLendings(List<LendingEntity> lendingEntities){
         return modelMapper.map(lendingEntities,new TypeToken<List<LendingDTO>>(){}.getType());
+    }
+    //user
+    public UserDTO toUserDTO(UserEntity userEntity) {
+        return modelMapper.map(userEntity,UserDTO.class);
+    }
+    public UserEntity toUserEntity(UserDTO userDTO) {
+        return modelMapper.map(userDTO,UserEntity.class);
     }
 
 
