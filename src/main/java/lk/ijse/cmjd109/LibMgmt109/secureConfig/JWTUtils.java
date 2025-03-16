@@ -21,7 +21,7 @@ public class JWTUtils {
     private Key key(){
        return Keys.hmacShaKeyFor(signature.getBytes());
     }
-    //Todo:create token
+    //create token
     public String generateToken(String username, Collection<? extends GrantedAuthority> authorities) {
        String roles = authorities.stream()
                .map(GrantedAuthority::getAuthority)
@@ -33,16 +33,19 @@ public class JWTUtils {
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
                 .signWith(key(), SignatureAlgorithm.HS256)
                 .compact();
-
-
-
     }
-
-
-
-
-
-    // Todo: validate token
+    // validate token
+    public boolean validateToken(String token) {
+        try{
+            Jwts.parser()
+                    .setSigningKey(key()).build().parse(token);
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+    //Todo: username extract
 
 
 }
