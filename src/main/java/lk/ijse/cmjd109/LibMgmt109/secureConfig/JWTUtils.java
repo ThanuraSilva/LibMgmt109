@@ -45,7 +45,13 @@ public class JWTUtils {
             return false;
         }
     }
-    //Todo: username extract
+    // username extract
+    public String getUserNameFrommToken(String token) {
+        return Jwts.parser()
+                .setSigningKey(key()).build()
+                .parseSignedClaims(token)
+                .getBody().getSubject();
+    }
 
 
 }
