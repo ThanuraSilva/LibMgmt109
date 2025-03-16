@@ -19,6 +19,9 @@ public class UtilityData {
     public static String generateStaffId(){
         return "S-"+UUID.randomUUID();
     }
+    public static String generateUserId(){
+        return "U-"+UUID.randomUUID();
+    }
     public static LocalDate generateTodayDate(){
         return LocalDate.now();
     }
